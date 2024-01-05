@@ -1,10 +1,15 @@
 package com.mysite.sbb;
 
-import java.time.LocalDateTime;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class SbbApplicationTests {
@@ -12,20 +17,19 @@ class SbbApplicationTests {
 	@Autowired
 	private QuestionRepository questionRepository;
 	
+	@Autowired
+	private AnswerRepository answerRepository;
 
+	@Transactional
 	@Test
-	void contextLoads() {
-		Question q1 = new Question();
-		q1.setSubject("what is sbb?");
-		q1.setContent("Want to know about sbb");
-		q1.setCreateDate(LocalDateTime.now());
-		this.questionRepository.save(q1); // save the first question
-
-		Question q2 = new Question();
-		q2.setSubject("what is spring boot model?");
-		q2.setContent("id gets automatically created? ");
-		q2.setCreateDate(LocalDateTime.now());
-		this.questionRepository.save(q2); // save the second question
+	void testJpa() {
+		Optional<Question> oq = this.questionRepository.findById(1);
+		assertTrue(oq.isPresent());
+		Question q = oq.get();
+		
+		List<Answer> answerList = q.getAnswerList();
+		
+		assertEquals(1, answerList.size());
+		assertEquals("yes, it will be generated", answerList.get(1).getContent());
 	}
-
 }
