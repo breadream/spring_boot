@@ -1,7 +1,5 @@
 package com.mysite.sbb.answer;
 
-import com.mysite.sbb.question.Question;
-
 import java.time.LocalDateTime;
 
 import com.mysite.sbb.question.Question;
