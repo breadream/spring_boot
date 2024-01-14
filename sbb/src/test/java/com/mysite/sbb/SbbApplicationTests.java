@@ -17,7 +17,7 @@ class SbbApplicationTests {
 		for (int i = 1; i <= 300; i++) {
 			String subject = String.format("This is Test Data:[%03d]", i);
 			String content = "No content";
-			this.questionService.create(subject, content);
+			this.questionService.create(subject, content, null);
 		}
 	}
 }
