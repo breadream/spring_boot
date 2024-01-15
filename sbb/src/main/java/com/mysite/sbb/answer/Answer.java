@@ -1,10 +1,9 @@
 package com.mysite.sbb.answer;
 
-import com.mysite.sbb.user.SiteUser;
-
 import java.time.LocalDateTime;
 
 import com.mysite.sbb.question.Question;
+import com.mysite.sbb.user.SiteUser;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,4 +32,6 @@ public class Answer {
 	
 	@ManyToOne
 	private SiteUser author;
+	
+	private LocalDateTime modifyDate;
 }
