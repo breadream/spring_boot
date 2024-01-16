@@ -18,6 +18,11 @@
                 </div>
             </div>
 			<div class="my-3">
+				<a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
+					th:data-uri="@{|/question/vote/${question.id}|}">
+					Recommend
+					<span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+				</a>
 				<a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
 					sec:authorize="isAuthenticated()"
 					th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
@@ -49,14 +54,19 @@
                 </div>
             </div>
             <div class="my-3">
-            <a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
-                sec:authorize="isAuthenticated()"
-                th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
-                th:text="Modify"></a>
-			<a href="javascript:void(0);" th:data-uri="@{|/answer/delete/${answer.id}|}"
-                class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
-                th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
-                th:text="Delete"></a>
+				<a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
+					th:data-uri="@{|/answer/vote/${answer.id}|}">
+					Recommend
+					<span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
+				</a>
+				<a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
+					sec:authorize="isAuthenticated()"
+					th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+					th:text="Modify"></a>
+				<a href="javascript:void(0);" th:data-uri="@{|/answer/delete/${answer.id}|}"
+					class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+					th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+					th:text="Delete"></a>
 			</div>
         </div>
     </div>
@@ -74,6 +84,14 @@ const delete_elements = document.getElementsByClassName("delete");
 Array.from(delete_elements).forEach(function(element) {
     element.addEventListener('click', function() {
         if(confirm("Are you sure to delete it?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+const recommend_elements = document.getElementsByClassName("recommend");
+Array.from(recommend_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("Are you sure to recommmend it?")) {
             location.href = this.dataset.uri;
         };
     });
